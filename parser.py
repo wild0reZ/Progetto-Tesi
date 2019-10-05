@@ -1,29 +1,52 @@
 import argparse
+import itertools
 import xml.etree.ElementTree as ET
 
 # Create an argparser that will help the user with some instruction
 def createArgumentParser():
-    parser = argparse.ArgumentParser(description='This script take as input an XML AGLibrary compatible file and will produce all the possible permutation of the multiple routing.')
-    parser.add_argument('-f', '--file', required=True, nargs=1, help='Insert the name or path of the file.')
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-f', required=True, nargs=1, help='Insert the name or path of the file.')
     args = parser.parse_args()
-    return args.file[0]
+    return args.f[0]
 
 # Open a file passed as parameter and will return the root of the XML
-def readFileAndCreateRoot(file_name):
+def readFileAndCreateTree(file_name):
     try:
         tree = ET.parse(file_name)
-        root = tree.getroot()
-        return root
+        return tree 
     except:
         print("No file named: " + file_name + " has been found.")
         return None
 
 # Testing ArgumentParse and XML Parse
-def printRoot():
+def printResources():
     openedFile = createArgumentParser()
-    if(readFileAndCreateRoot(openedFile) is not None):
-        root = readFileAndCreateRoot(openedFile)
-        for child in root:
-            print(child.tag)
+    if(readFileAndCreateTree(openedFile) is not None):
+        tree = readFileAndCreateTree(openedFile)
+        for node in tree.iter('job'):
+            print('\n')
+            for elem in node.iter():
+                if (elem.tag == 'id_job'):
+                    print('job_id:', elem.text)
+                if (elem.tag == 'id_resource'):
+                    print('id_resource', elem.text)
+                if (elem.tag == 'id_time_profile'):
+                    print('id_time_profile', elem.text)
 
-printRoot()
+def saverResources():
+    openedFile = createArgumentParser()
+    arl = []
+    rl = []
+    if(readFileAndCreateTree(openedFile) is not None):
+        tree = readFileAndCreateTree(openedFile)
+        for node in tree.iter('job'):
+            for elem in node.iter():
+                if (elem.tag == 'id_time_profile'):
+                    rl.append(elem.text)
+                arl.append(rl)
+    return arl
+
+
+
+resource_list = saverResources()
+print(resource_list)
