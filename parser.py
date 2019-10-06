@@ -61,25 +61,25 @@ def allThePerms(data):
 def saveToSingleFile(subl):
     tree = readFileAndCreateTree('./output/template.xml')
     for (a, e) in zip(tree.findall('.//job//multiple_routings_list_elem//id_time_profile'), subl):
-        print(a.tag, e)
-        #a.text = e
-        #tree.write('./output/cazzone'+str(count)+'.xml')
-        #count -= 1
-    print('== end ==')
+        a.text = e
+    tree.write('./output/cazzone.xml')
 
 
 def exportModifiedXML():
     createDirectory()
     allThePermsTuples = allThePerms(extractDataFromXML())
+    count = 0
     for subl in allThePermsTuples:
+        tree = readFileAndCreateTree('./output/template.xml')
         out = list(chain(*subl)) 
-        saveToSingleFile(out)
+        for (a, e) in zip(tree.findall('.//job//multiple_routings_list_elem//id_time_profile'), out):
+            a.text = e
+        tree.write('./output/'+str(count)+'.xml')
+        print("Saving file number: ", count+1)
+        count += 1
 
 def main():
    exportModifiedXML()
-   # with open("./output/tuples.txt", "w+") as f:
-   #     f.write('\n'.join(str(subl) for subl in allThePerms(extractDataFromXML())))
-   #     f.close()
 
 
 if __name__ == "__main__":
