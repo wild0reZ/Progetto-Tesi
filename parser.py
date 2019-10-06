@@ -18,22 +18,7 @@ def readFileAndCreateTree(file_name):
         print("No file named: " + file_name + " has been found.")
         return None
 
-# Testing ArgumentParse and XML Parse
-def printResources():
-    openedFile = createArgumentParser()
-    if(readFileAndCreateTree(openedFile) is not None):
-        tree = readFileAndCreateTree(openedFile)
-        for node in tree.iter('job'):
-            print('\n')
-            for elem in node.iter():
-                if (elem.tag == 'id_job'):
-                    print('job_id:', elem.text)
-                if (elem.tag == 'id_resource'):
-                    print('id_resource', elem.text)
-                if (elem.tag == 'id_time_profile'):
-                    print('id_time_profile', elem.text)
-
-def saveResources():
+def extractDataFromXML():
     openedFile = createArgumentParser()
     arl = [] # Creo una lista che ospiterà tutte le liste degli id_time_profile
     if(readFileAndCreateTree(openedFile) is not None):
@@ -47,28 +32,17 @@ def saveResources():
                 arl.append(tmp) # Salvo la lista all'interno della lista di tutti i multiple_routings_list_elem
     return arl
 
-def saveResources2():
-    openedFile = createArgumentParser()
-    arl = [] # Creo una lista che ospiterà tutte le liste degli id_time_profile
-    if(readFileAndCreateTree(openedFile) is not None):
-        tree = readFileAndCreateTree(openedFile)
-        for node in tree.iter('job'): # Cerco all'interno del file XML tutti i tag job
-            tmp1 = []
-            for elem in node.iter('multiple_routings_list_elem'): # Cerco tutti i child di job con tag multiple_routings_list_elem
-                tmp = [] # Inizializzo una lista vuota che conterrà tutti gli id_time_profile del singolo multiple_routings_list_elem
-                for a in elem.iter(): # Inizio a cercare gli id_time_profile
-                    if(a.tag == 'id_time_profile'):
-                        tmp.append(a.text) # Li salvo all'interno della lista
-                tmp1.append(tmp) # Salvo la lista all'interno della lista di tutti i multiple_routings_list_elem
-            arl.append(tmp1)
-    return arl
-
 def allThePerms(data):
     count  = 0
+    # Dato che, come parametro gli sto passando una lista di liste, mi calcolo tutte le possibili permutazioni
+    # attraverso map che prende due parametri, list che consente appunto di creare una lista e l'altro
+    # permutations(sublist) che, attraverso la funzione permutations calcola tutte le possibili permutazioni
+    # di una sublist estratta dalla lista di liste.
+    # In fine calcoliamo il prodotto cartesiano tra le liste attraverso la funzione product.  
     perms = [list(map(list,permutations(sublist))) for sublist in data]
     for data in product(*perms):
         count += 1 
         print(list(data))
     print(count)
 
-allThePerms(saveResources())
+allThePerms(extractDataFromXML())
