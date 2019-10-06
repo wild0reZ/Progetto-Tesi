@@ -40,13 +40,9 @@ def saverResources():
     if(readFileAndCreateTree(openedFile) is not None):
         tree = readFileAndCreateTree(openedFile)
         for node in tree.iter('job'):
-            for elem in node.iter():
-                if (elem.tag == 'id_time_profile'):
-                    rl.append(elem.text)
-                arl.append(rl)
-    return arl
-
-
+            for elem in node.iter('multiple_routings_list_elem'):
+                for a in elem.iter():
+    return rl
 
 resource_list = saverResources()
 print(resource_list)
