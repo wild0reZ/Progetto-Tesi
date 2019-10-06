@@ -63,12 +63,12 @@ def saveResources2():
             arl.append(tmp1)
     return arl
 
-def product_perms(data):
+def allThePerms(data):
     count  = 0
-    perms = [list(map(list,permutations(subl))) for subl in data]
+    perms = [list(map(list,permutations(sublist))) for sublist in data]
     for data in product(*perms):
         count += 1 
         print(list(data))
     print(count)
 
-product_perms(saveResources())
+allThePerms(saveResources())
