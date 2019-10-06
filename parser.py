@@ -70,6 +70,7 @@ def exportModifiedXML():
         tree.write('./output/'+str(count)+'.xml')
         print("Saving file number: ", count+1)
         count += 1
+    os.remove('./output/template.xml')
 
 def main():
    exportModifiedXML()
