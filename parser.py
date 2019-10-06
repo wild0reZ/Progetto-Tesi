@@ -58,13 +58,6 @@ def allThePerms(data):
         tmp.append(data)
     return tmp
 
-def saveToSingleFile(subl):
-    tree = readFileAndCreateTree('./output/template.xml')
-    for (a, e) in zip(tree.findall('.//job//multiple_routings_list_elem//id_time_profile'), subl):
-        a.text = e
-    tree.write('./output/cazzone.xml')
-
-
 def exportModifiedXML():
     createDirectory()
     allThePermsTuples = allThePerms(extractDataFromXML())
@@ -80,7 +73,6 @@ def exportModifiedXML():
 
 def main():
    exportModifiedXML()
-
 
 if __name__ == "__main__":
     main()
