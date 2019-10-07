@@ -73,8 +73,12 @@ def allThePermsRotation(data):
         allRotationsCartesianProduct.append(data)
     return allRotationsCartesianProduct 
 
+# Cambiare il nome del file cone nome file originale + contatore
 def exportModifiedXML():
     createDirectory()
+    path = str(createArgumentParser())
+    rest, fileName = os.path.split(path)
+    export = fileName.split('.')[0]
     allThePermsTuples = allThePermsRotation(extractDataFromXML())
     count = 0
     for subl in allThePermsTuples:
@@ -82,7 +86,7 @@ def exportModifiedXML():
         out = list(itertools.chain(*subl)) 
         for (a, e) in zip(tree.findall('.//job//multiple_routings_list_elem//id_time_profile'), out):
             a.text = e
-        tree.write('./output/'+str(count)+'.xml')
+        tree.write('./output/'+export+ '_' +str(count)+'.xml')
         print("Saving file number: ", count+1)
         count += 1
     os.remove('./output/template.xml')
