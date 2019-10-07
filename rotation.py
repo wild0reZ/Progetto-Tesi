@@ -1,7 +1,6 @@
 import argparse
 import os
 import shutil
-#from itertools import permutations, product, chain 
 import itertools
 import xml.etree.ElementTree as ET
 
