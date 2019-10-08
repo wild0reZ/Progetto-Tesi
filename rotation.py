@@ -44,20 +44,6 @@ def extractDataFromXML():
                 arl.append(tmp) # Salvo la lista all'interno della lista di tutti i multiple_routings_list_elem
     return arl
 
-def allThePerms(data):
-    count  = 0
-    tmp = []
-    # Dato che, come parametro gli sto passando una lista di liste, mi calcolo tutte le possibili permutazioni
-    # attraverso map che prende due parametri, list che consente appunto di creare una lista e l'altro
-    # permutations(sublist) che, attraverso la funzione permutations calcola tutte le possibili permutazioni
-    # di una sublist estratta dalla lista di liste.
-    # In fine calcoliamo il prodotto cartesiano tra le liste attraverso la funzione product.  
-    perms = [list(map(list,itertools.permutations(sublist))) for sublist in data]
-    for data in itertools.product(*perms):
-        count += 1 
-        tmp.append(data)
-    return tmp
-
 def rotate(l, n):
     return l[n:] + l[:n]
 
