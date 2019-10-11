@@ -2,7 +2,7 @@ import argparse
 import os
 import shutil
 import itertools
-import xml.etree.ElementTree as ET
+from lxml import etree
 
 # Create an argparser that will help the user with some instruction
 def createArgumentParser():
@@ -14,7 +14,7 @@ def createArgumentParser():
 # Open a file passed as parameter and will return the root of the XML
 def readFileAndCreateTree(file_name):
     try:
-        tree = ET.parse(file_name)
+        tree = etree.parse(file_name)
         return tree 
     except:
         print("No file named: " + file_name + " has been found.")
@@ -59,7 +59,6 @@ def allThePermsRotation(data):
         allRotationsCartesianProduct.append(data)
     return allRotationsCartesianProduct 
 
-# Cambiare il nome del file cone nome file originale + contatore
 def exportModifiedXML():
     createDirectory()
     path = str(createArgumentParser())
@@ -72,14 +71,13 @@ def exportModifiedXML():
         out = list(itertools.chain(*subl)) 
         for (a, e) in zip(tree.findall('.//job//multiple_routings_list_elem//id_time_profile'), out):
             a.text = e
-        tree.write('./output/'+export+ '_' +str(count)+'.xml', xml_declaration=True)
+        tree.write('./output/'+export+ '_' +str(count)+'.xml', encoding='utf-8', xml_declaration=True)
         print("Saving file number: ", count+1)
         count += 1
     os.remove('./output/template.xml')
 
 def main():
     exportModifiedXML()
-
 
 if __name__ == "__main__":
     main()
