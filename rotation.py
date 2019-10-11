@@ -72,7 +72,7 @@ def exportModifiedXML():
         out = list(itertools.chain(*subl)) 
         for (a, e) in zip(tree.findall('.//job//multiple_routings_list_elem//id_time_profile'), out):
             a.text = e
-        tree.write('./output/'+export+ '_' +str(count)+'.xml')
+        tree.write('./output/'+export+ '_' +str(count)+'.xml', xml_declaration=True)
         print("Saving file number: ", count+1)
         count += 1
     os.remove('./output/template.xml')
