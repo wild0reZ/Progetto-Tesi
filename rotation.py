@@ -67,14 +67,14 @@ def exportModifiedXML():
     allThePermsTuples = allThePermsRotation(extractDataFromXML())
     count = 0
     for subl in allThePermsTuples:
-        tree = readFileAndCreateTree('./output/template.xml')
+        tree = readFileAndCreateTree('./xml_input_file/template.xml')
         out = list(itertools.chain(*subl)) 
         for (a, e) in zip(tree.findall('.//job//multiple_routings_list_elem//id_time_profile'), out):
             a.text = e
-        tree.write('./output/'+export+ '_' +str(count)+'.xml', encoding='utf-8', xml_declaration=True)
+        tree.write('./xml_input_file/'+export+ '_' +str(count)+'.xml', encoding='utf-8', xml_declaration=True)
         print("Saving file number: ", count+1)
         count += 1
-    os.remove('./output/template.xml')
+    os.remove('./xml_input_file/template.xml')
 
 def main():
     exportModifiedXML()
