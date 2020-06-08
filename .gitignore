@@ -1,3 +1,5 @@
+.vscode/
+.DS_Store
 testingFiles/
 permutation.py
 rotation_DTD.py
