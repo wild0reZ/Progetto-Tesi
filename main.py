@@ -134,9 +134,9 @@ def removeSpaces():
         
 
 def main():
-    #exportModifiedXML()
-    #removeSpaces()
-    prevision()
+    exportModifiedXML()
+    removeSpaces()
+    #prevision()
 
 if __name__ == "__main__":
     main()
