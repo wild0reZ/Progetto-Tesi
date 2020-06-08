@@ -61,9 +61,6 @@ def prevision():
 
 def extractDataFromXML():
     openedFile = createArgumentParser()
-    jobNumber = 0
-    mrlrNumber = 0
-    itpNumber = 0
     shutil.copyfile(openedFile, './output/{0}'.format(os.path.basename('template.xml')))
     arl = [] # Creo una lista che ospiterà tutte le liste degli id_time_profile
     if(readFileAndCreateTree(openedFile) is not None):
@@ -71,17 +68,10 @@ def extractDataFromXML():
         for node in tree.iter('job'): # Cerco all'interno del file XML tutti i tag job
             for elem in node.iter('multiple_routings_list_elem'): # Cerco tutti i child di job con tag multiple_routings_list_elem
                 tmp = [] # Inizializzo una lista vuota che conterrà tutti gli id_time_profile del singolo multiple_routings_list_elem
-                jobNumber += 1
-                mrlrNumber += 1
-                print(elem.tag)
                 for a in elem.iter(): # Inizio a cercare gli id_time_profile
                     if(a.tag == 'id_time_profile'):
-                        itpNumber += 1
-                        print(a.tag)
                         tmp.append(a.text) # Li salvo all'interno della lista
                 arl.append(tmp) # Salvo la lista all'interno della lista di tutti i multiple_routings_list_elem
-
-    print('[DEBUG] Ci sono %d jobs, %d multiple routings, %d id time profile',  jobNumber,  mrlrNumber,  itpNumber)
     return arl
 
 def rotate(l, n):
